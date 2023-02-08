@@ -17,8 +17,25 @@ export interface CookieConsentProps {
   hideOnDecline: boolean;
   onAccept: (acceptedByScrolling: boolean) => void;
   onDecline: () => void;
+  onCustomize: (
+    cookies: Array<{
+      name: string;
+      title: string;
+      description: string;
+      enabled: boolean;
+      type: string;
+    }>
+  ) => void;
+  optionsToCustomize: Array<{
+    name: string;
+    title: string;
+    description: string;
+    enabled: boolean;
+    type: string;
+  }>;
   buttonText: string | ReactNode | Function;
   declineButtonText: string | ReactNode | Function;
+  customizeButtonText: string | ReactNode | Function;
   cookieName: string;
   cookieValue: string | object;
   declineCookieValue: string | object;
@@ -30,13 +47,18 @@ export interface CookieConsentProps {
   buttonClasses: string;
   buttonWrapperClasses: string;
   declineButtonClasses: string;
+  customizeButtonClasses: string;
+  customize: boolean;
   buttonId: string;
   declineButtonId: string;
+  customizeButtonId: string;
   overlayClasses: string;
   ariaAcceptLabel: string;
   ariaDeclineLabel: string;
+  ariaCustomizeLabel: string;
   disableButtonStyles: boolean;
   enableDeclineButton: boolean;
+  enableCustomizeButton: boolean;
   flipButtons: boolean;
   cookieSecurity?: boolean;
   overlay: boolean;
@@ -50,15 +72,34 @@ export interface CookieConsentProps {
   customContainerAttributes: Object;
   customButtonProps: Object;
   customDeclineButtonProps: Object;
+  customCustomizeButtonProps: Object;
   customButtonWrapperAttributes: Object;
   onOverlayClick: () => void;
   // these should be enums
   location: string;
   visible: string;
   sameSite: "strict" | "Strict" | "lax" | "Lax" | "none" | "None" | undefined;
+  cookies: Array<{
+    name: string;
+    title: string;
+    description: string;
+    enabled: boolean;
+    type: string;
+  }>;
+  customizeModalTitle: string;
+  customizeButtonStyle: React.CSSProperties;
+  customizeSaveWrapperStyle: React.CSSProperties;
+  customizeSaveButtonStyle: React.CSSProperties;
+  customizeModalStyle: React.CSSProperties;
+  customizeHideOverlayButtonStyle: React.CSSProperties;
+  customizeModalOptionsWrapperStyle: React.CSSProperties;
+  customizeModalOptionWrapperStyle: React.CSSProperties;
+  customizeModalOptionTextStyle: React.CSSProperties;
+  customizeOptionWrapperStyle: React.CSSProperties;
+  customizeOptionCheckboxStyle: React.CSSProperties;
 }
 
-const DefaultButtonComponent: FunctionComponent<{ children: ReactNode; [x: string]: any }> = ({
+const DefaultButtonComponent: FunctionComponent<{ children: ReactNode;[x: string]: any }> = ({
   children,
   ...props
 }) => {
@@ -73,12 +114,14 @@ export const defaultCookieConsentProps: CookieConsentProps = {
   visible: VISIBILITY_OPTIONS.BY_COOKIE_VALUE,
   onAccept: (_acceptedByScrolling) => {},
   onDecline: () => {},
+  onCustomize: () => {},
   cookieName: defaultCookieConsentName,
   cookieValue: "true",
   declineCookieValue: "false",
   setDeclineCookie: true,
   buttonText: "I understand",
   declineButtonText: "I decline",
+  customizeButtonText: "Customize",
   debug: false,
   expires: 365,
   containerClasses: "CookieConsent",
@@ -88,15 +131,18 @@ export const defaultCookieConsentProps: CookieConsentProps = {
   declineButtonClasses: "",
   buttonId: "rcc-confirm-button",
   declineButtonId: "rcc-decline-button",
+  customizeButtonId: "rcc-customize-button",
   extraCookieOptions: {},
   disableButtonStyles: false,
   enableDeclineButton: false,
+  enableCustomizeButton: false,
+  customize: false,
   flipButtons: false,
   sameSite: SAME_SITE_OPTIONS.LAX,
   ButtonComponent: DefaultButtonComponent,
   overlay: false,
   overlayClasses: "",
-  onOverlayClick: () => {},
+  onOverlayClick: () => { },
   acceptOnOverlayClick: false,
   ariaAcceptLabel: "Accept cookies",
   ariaDeclineLabel: "Decline cookies",
@@ -112,4 +158,20 @@ export const defaultCookieConsentProps: CookieConsentProps = {
   declineButtonStyle: {},
   contentStyle: {},
   overlayStyle: {},
+  customizeButtonStyle: {},
+  customizeButtonClasses: "",
+  ariaCustomizeLabel: "",
+  customCustomizeButtonProps: {},
+  optionsToCustomize: [],
+  cookies: [],
+  customizeModalTitle: "",
+  customizeSaveWrapperStyle: {},
+  customizeSaveButtonStyle: {},
+  customizeHideOverlayButtonStyle: {},
+  customizeModalStyle: {},
+  customizeOptionWrapperStyle: {},
+  customizeOptionCheckboxStyle: {},
+  customizeModalOptionTextStyle: {},
+  customizeModalOptionsWrapperStyle: {},
+  customizeModalOptionWrapperStyle: {},
 };

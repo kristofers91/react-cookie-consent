@@ -32,3 +32,4 @@ export * from "./stories/muiButtons.story";
 export * from "./stories/onAccept.story";
 export * from "./stories/overlay.story";
 export * from "./stories/rainbows.story";
+export * from "./stories/onCustomize.story";

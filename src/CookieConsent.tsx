@@ -12,7 +12,13 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
   state: CookieConsentState = defaultState;
 
   componentDidMount() {
-    const { debug } = this.props;
+    const { overlay, customize, optionsToCustomize, debug } = this.props;
+
+    this.setState({
+      cookies: optionsToCustomize,
+      overlay,
+      customize,
+    });
 
     // if cookie undefined or debug
     if (this.getCookieValue() === undefined || debug) {
@@ -72,6 +78,56 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
     if (hideOnDecline) {
       this.setState({ visible: false });
     }
+  }
+
+  /**
+   * Open the customize modal
+   */
+  customize() {
+    this.setState({ customize: true, overlay: true });
+  }
+
+  /**
+   * Set a persistent cookie based on the customized cookie settings
+   */
+  saveCustomize() {
+    const { cookieName, onCustomize } = this.props;
+
+    const cookiesValue = this.state.cookies.reduce((acc: any, cookie: any) => {
+      acc[cookie.type] = cookie.enabled ? "granted" : "denied";
+      return acc;
+    }, {});
+
+    this.setCookie(cookieName, cookiesValue);
+
+    onCustomize(cookiesValue);
+
+    this.setState({ visible: false, customize: false, overlay: false });
+  }
+
+  /**
+   * Close the customize modal
+   */
+  hideOverlay() {
+    this.setState({ overlay: false });
+  }
+
+  /**
+   * onChange handler for the customize modal
+   * @param e React.ChangeEvent<HTMLInputElement>
+   * @param cookieName string
+   */
+  handleCookieChange(e: React.ChangeEvent<HTMLInputElement>, cookieName: string) {
+    const { checked } = e.target;
+
+    const cookies = this.state.cookies.map((cookie) => {
+      if (cookie.name === cookieName) {
+        return { ...cookie, enabled: checked };
+      }
+      return cookie;
+    });
+
+    this.setState({ cookies });
   }
 
   /**
@@ -157,36 +213,64 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
       style,
       buttonStyle,
       declineButtonStyle,
+      customizeButtonStyle,
       contentStyle,
       disableStyles,
       buttonText,
       declineButtonText,
+      customizeButtonText,
       containerClasses,
       contentClasses,
       buttonClasses,
       buttonWrapperClasses,
       declineButtonClasses,
+      customizeButtonClasses,
       buttonId,
       declineButtonId,
       disableButtonStyles,
+      customizeButtonId,
       enableDeclineButton,
+      enableCustomizeButton,
       flipButtons,
       ButtonComponent,
-      overlay,
       overlayClasses,
       overlayStyle,
       ariaAcceptLabel,
       ariaDeclineLabel,
+      ariaCustomizeLabel,
       customContainerAttributes,
       customContentAttributes,
       customButtonProps,
       customDeclineButtonProps,
+      customCustomizeButtonProps,
       customButtonWrapperAttributes,
+      customizeModalTitle,
+      customizeModalStyle,
+      customizeModalOptionsWrapperStyle,
+      customizeModalOptionWrapperStyle,
+      customizeModalOptionTextStyle,
+      customizeOptionCheckboxStyle,
+      customizeSaveButtonStyle,
+      customizeHideOverlayButtonStyle,
+      customizeSaveWrapperStyle,
+      customizeOptionWrapperStyle,
     } = this.props;
 
     let myStyle: CSSProperties = {};
     let myButtonStyle: CSSProperties = {};
     let myDeclineButtonStyle: CSSProperties = {};
+
+    let myCustomizeButtonStyle: CSSProperties = {};
+    let myCustomizeSaveWrapperStyle: CSSProperties = {};
+    let myCustomizeSaveButtonStyle: CSSProperties = {};
+    let myCustomizeModalStyle: CSSProperties = {};
+    let myCustomizeHideOverlayButtonStyle: CSSProperties = {};
+    let myCustomizeModalOptionsWrapperStyle: CSSProperties = {};
+    let myCustomizeModalOptionWrapperStyle: CSSProperties = {};
+    let myCustomizeModalOptionTextStyle: CSSProperties = {};
+    let myCustomizeOptionWrapperStyle: CSSProperties = {};
+    let myCustomizeOptionCheckboxStyle: CSSProperties = {};
+
     let myContentStyle: CSSProperties = {};
     let myOverlayStyle: CSSProperties = {};
 
@@ -195,6 +279,18 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
       myStyle = Object.assign({}, style);
       myButtonStyle = Object.assign({}, buttonStyle);
       myDeclineButtonStyle = Object.assign({}, declineButtonStyle);
+
+      myCustomizeButtonStyle = Object.assign({}, customizeButtonStyle);
+      myCustomizeSaveButtonStyle = Object.assign({}, customizeSaveButtonStyle);
+      myCustomizeSaveWrapperStyle = Object.assign({}, customizeSaveWrapperStyle);
+      myCustomizeHideOverlayButtonStyle = Object.assign({}, customizeHideOverlayButtonStyle);
+      myCustomizeModalStyle = Object.assign({}, customizeModalStyle);
+      myCustomizeModalOptionTextStyle = Object.assign({}, customizeModalOptionTextStyle);
+      myCustomizeModalOptionsWrapperStyle = Object.assign({}, customizeModalOptionsWrapperStyle);
+      myCustomizeModalOptionWrapperStyle = Object.assign({}, customizeModalOptionWrapperStyle);
+      myCustomizeOptionWrapperStyle = Object.assign({}, customizeOptionWrapperStyle);
+      myCustomizeOptionCheckboxStyle = Object.assign({}, customizeOptionCheckboxStyle);
+
       myContentStyle = Object.assign({}, contentStyle);
       myOverlayStyle = Object.assign({}, overlayStyle);
     } else {
@@ -207,11 +303,61 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
       if (disableButtonStyles) {
         myButtonStyle = Object.assign({}, buttonStyle);
         myDeclineButtonStyle = Object.assign({}, declineButtonStyle);
+        myCustomizeButtonStyle = Object.assign({}, customizeButtonStyle);
+        myCustomizeSaveWrapperStyle = Object.assign({}, customizeSaveWrapperStyle);
+        myCustomizeSaveButtonStyle = Object.assign({}, customizeSaveButtonStyle);
+        myCustomizeHideOverlayButtonStyle = Object.assign({}, customizeHideOverlayButtonStyle);
+        myCustomizeModalStyle = Object.assign({}, customizeModalStyle);
+        myCustomizeModalOptionTextStyle = Object.assign({}, customizeModalOptionTextStyle);
+        myCustomizeModalOptionsWrapperStyle = Object.assign({}, customizeModalOptionWrapperStyle);
+        myCustomizeModalOptionWrapperStyle = Object.assign({}, customizeModalOptionWrapperStyle);
+        myCustomizeOptionWrapperStyle = Object.assign({}, customizeOptionWrapperStyle);
+        myCustomizeOptionCheckboxStyle = Object.assign({}, customizeOptionCheckboxStyle);
       } else {
         myButtonStyle = Object.assign({}, { ...this.state.buttonStyle, ...buttonStyle });
         myDeclineButtonStyle = Object.assign(
           {},
           { ...this.state.declineButtonStyle, ...declineButtonStyle }
+        );
+        myCustomizeButtonStyle = Object.assign(
+          {},
+          { ...this.state.customizeButtonStyle, ...customizeButtonStyle }
+        );
+        myCustomizeSaveWrapperStyle = Object.assign(
+          {},
+          { ...this.state.customizeSaveWrapperStyle, ...customizeSaveWrapperStyle }
+        );
+        myCustomizeSaveButtonStyle = Object.assign(
+          {},
+          { ...this.state.customizeSaveButtonStyle, ...customizeSaveButtonStyle }
+        );
+        myCustomizeHideOverlayButtonStyle = Object.assign(
+          {},
+          { ...this.state.customizeHideOverlayButtonStyle, ...customizeHideOverlayButtonStyle }
+        );
+        myCustomizeModalStyle = Object.assign(
+          {},
+          { ...this.state.customizeModalStyle, ...customizeModalStyle }
+        );
+        myCustomizeOptionWrapperStyle = Object.assign(
+          {},
+          { ...this.state.customizeOptionWrapperStyle, ...customizeOptionWrapperStyle }
+        );
+        myCustomizeOptionCheckboxStyle = Object.assign(
+          {},
+          { ...this.state.customizeOptionCheckboxStyle, ...customizeOptionCheckboxStyle }
+        );
+        myCustomizeModalOptionsWrapperStyle = Object.assign(
+          {},
+          { ...this.state.customizeModalOptionsWrapperStyle, ...customizeModalOptionsWrapperStyle }
+        );
+        myCustomizeModalOptionWrapperStyle = Object.assign(
+          {},
+          { ...this.state.customizeModalOptionWrapperStyle, ...customizeModalOptionWrapperStyle }
+        );
+        myCustomizeModalOptionTextStyle = Object.assign(
+          {},
+          { ...this.state.customizeModalOptionTextStyle, ...customizeModalOptionTextStyle }
         );
       }
     }
@@ -228,6 +374,24 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
     }
 
     const buttonsToRender = [];
+
+    // add decline button
+    enableCustomizeButton &&
+      buttonsToRender.push(
+        <ButtonComponent
+          key="customizeButton"
+          style={myCustomizeButtonStyle}
+          className={customizeButtonClasses}
+          id={customizeButtonId}
+          aria-label={ariaCustomizeLabel}
+          onClick={() => {
+            this.customize();
+          }}
+          {...customCustomizeButtonProps}
+        >
+          {customizeButtonText}
+        </ButtonComponent>
+      );
 
     // add decline button
     enableDeclineButton &&
@@ -270,7 +434,7 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
 
     return (
       <ConditionalWrapper
-        condition={overlay}
+        condition={this.state.overlay}
         wrapper={(children) => (
           <div
             style={myOverlayStyle}
@@ -283,16 +447,52 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
           </div>
         )}
       >
-        <div className={`${containerClasses}`} style={myStyle} {...customContainerAttributes}>
-          <div style={myContentStyle} className={contentClasses} {...customContentAttributes}>
-            {this.props.children}
+        <>
+          {this.props.enableCustomizeButton && this.state.overlay && this.state.customize ? (
+            <div style={myCustomizeModalStyle}>
+              <button style={myCustomizeHideOverlayButtonStyle} onClick={() => this.hideOverlay()}>
+                X
+              </button>
+              <h2>{customizeModalTitle}</h2>
+              <div style={myCustomizeModalOptionsWrapperStyle}>
+                {this.state.cookies &&
+                  this.state.cookies.length > 0 &&
+                  this.state.cookies.map((cookie) => (
+                    <div style={myCustomizeModalOptionWrapperStyle}>
+                      <div style={myCustomizeModalOptionTextStyle}>
+                        <h3>{cookie.title}</h3>
+                        <p>{cookie.description}</p>
+                      </div>
+                      <div style={myCustomizeOptionWrapperStyle}>
+                        <input
+                          style={myCustomizeOptionCheckboxStyle}
+                          type="checkbox"
+                          name={cookie.name}
+                          checked={cookie.enabled}
+                          onChange={(e) => this.handleCookieChange(e, cookie.name)}
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <div style={myCustomizeSaveWrapperStyle}>
+                <button style={myCustomizeSaveButtonStyle} onClick={() => this.saveCustomize()}>
+                  Save
+                </button>
+              </div>
+            </div>
+          ) : null}
+          <div className={`${containerClasses}`} style={myStyle} {...customContainerAttributes}>
+            <div style={myContentStyle} className={contentClasses} {...customContentAttributes}>
+              {this.props.children}
+            </div>
+            <div className={`${buttonWrapperClasses}`} {...customButtonWrapperAttributes}>
+              {buttonsToRender.map((button) => {
+                return button;
+              })}
+            </div>
           </div>
-          <div className={`${buttonWrapperClasses}`} {...customButtonWrapperAttributes}>
-            {buttonsToRender.map((button) => {
-              return button;
-            })}
-          </div>
-        </div>
+        </>
       </ConditionalWrapper>
     );
   }
