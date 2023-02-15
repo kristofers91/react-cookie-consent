@@ -92,7 +92,7 @@ export const defaultState: CookieConsentState = {
   },
   customizeSaveWrapperStyle: {
     display: "flex",
-    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   customizeSaveButtonStyle: {
     margin: "20px",

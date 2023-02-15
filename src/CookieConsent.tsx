@@ -309,7 +309,7 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
         myCustomizeHideOverlayButtonStyle = Object.assign({}, customizeHideOverlayButtonStyle);
         myCustomizeModalStyle = Object.assign({}, customizeModalStyle);
         myCustomizeModalOptionTextStyle = Object.assign({}, customizeModalOptionTextStyle);
-        myCustomizeModalOptionsWrapperStyle = Object.assign({}, customizeModalOptionWrapperStyle);
+        myCustomizeModalOptionsWrapperStyle = Object.assign({}, customizeModalOptionsWrapperStyle);
         myCustomizeModalOptionWrapperStyle = Object.assign({}, customizeModalOptionWrapperStyle);
         myCustomizeOptionWrapperStyle = Object.assign({}, customizeOptionWrapperStyle);
         myCustomizeOptionCheckboxStyle = Object.assign({}, customizeOptionCheckboxStyle);
