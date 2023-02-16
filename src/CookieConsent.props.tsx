@@ -18,13 +18,7 @@ export interface CookieConsentProps {
   onAccept: (acceptedByScrolling: boolean) => void;
   onDecline: () => void;
   onCustomize: (
-    cookies: Array<{
-      name: string;
-      title: string;
-      description: string;
-      enabled: boolean;
-      type: string;
-    }>
+    cookies: any
   ) => void;
   optionsToCustomize: Array<{
     name: string;
