@@ -94,7 +94,7 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
     const { cookieName, onCustomize } = this.props;
 
     const cookiesValue = this.state.cookies.reduce((acc: any, cookie: any) => {
-      acc[cookie.type] = cookie.enabled ? "granted" : "denied";
+      acc[cookie.type] = cookie.checked ? "granted" : "denied";
       return acc;
     }, {});
 
@@ -122,7 +122,7 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
 
     const cookies = this.state.cookies.map((cookie) => {
       if (cookie.name === cookieName) {
-        return { ...cookie, enabled: checked };
+        return { ...cookie, checked: checked };
       }
       return cookie;
     });
