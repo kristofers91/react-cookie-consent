@@ -24,7 +24,8 @@ export interface CookieConsentProps {
     name: string;
     title: string;
     description: string;
-    enabled: boolean;
+    checked: boolean;
+    required: boolean | undefined;
     type: string;
   }>;
   buttonText: string | ReactNode | Function;
@@ -77,7 +78,8 @@ export interface CookieConsentProps {
     name: string;
     title: string;
     description: string;
-    enabled: boolean;
+    checked: boolean;
+    required: boolean | undefined;
     type: string;
   }>;
   customizeModalTitle: string;
