@@ -83,6 +83,7 @@ export interface CookieConsentProps {
     type: string;
   }>;
   customizeModalTitle: string;
+  customizeModalTitleStyle: React.CSSProperties;
   customizeButtonStyle: React.CSSProperties;
   customizeSaveWrapperStyle: React.CSSProperties;
   customizeSaveButtonStyle: React.CSSProperties;
@@ -108,9 +109,9 @@ export const defaultCookieConsentProps: CookieConsentProps = {
   hideOnDecline: true,
   location: POSITION_OPTIONS.BOTTOM,
   visible: VISIBILITY_OPTIONS.BY_COOKIE_VALUE,
-  onAccept: (_acceptedByScrolling) => {},
-  onDecline: () => {},
-  onCustomize: () => {},
+  onAccept: (_acceptedByScrolling) => { },
+  onDecline: () => { },
+  onCustomize: () => { },
   cookieName: defaultCookieConsentName,
   cookieValue: "true",
   declineCookieValue: "false",
@@ -170,4 +171,5 @@ export const defaultCookieConsentProps: CookieConsentProps = {
   customizeModalOptionTextStyle: {},
   customizeModalOptionsWrapperStyle: {},
   customizeModalOptionWrapperStyle: {},
+  customizeModalTitleStyle: {}
 };
