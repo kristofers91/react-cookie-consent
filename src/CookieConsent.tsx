@@ -468,7 +468,8 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
                           style={myCustomizeOptionCheckboxStyle}
                           type="checkbox"
                           name={cookie.name}
-                          checked={cookie.enabled}
+                          checked={cookie.checked}
+                          disabled={cookie.required ? true : false}
                           onChange={(e) => this.handleCookieChange(e, cookie.name)}
                         />
                       </div>
