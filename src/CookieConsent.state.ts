@@ -6,7 +6,8 @@ export interface CookieConsentState {
     name: string;
     title: string;
     description: string;
-    enabled: boolean;
+    checked: boolean;
+    required: boolean | undefined;
     type: string;
   }>;
   style: React.CSSProperties;
