@@ -376,24 +376,6 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
     const buttonsToRender = [];
 
     // add decline button
-    enableCustomizeButton &&
-      buttonsToRender.push(
-        <ButtonComponent
-          key="customizeButton"
-          style={myCustomizeButtonStyle}
-          className={customizeButtonClasses}
-          id={customizeButtonId}
-          aria-label={ariaCustomizeLabel}
-          onClick={() => {
-            this.customize();
-          }}
-          {...customCustomizeButtonProps}
-        >
-          {customizeButtonText}
-        </ButtonComponent>
-      );
-
-    // add decline button
     enableDeclineButton &&
       buttonsToRender.push(
         <ButtonComponent
@@ -408,6 +390,24 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
           {...customDeclineButtonProps}
         >
           {declineButtonText}
+        </ButtonComponent>
+      );
+
+    // add customize button
+    enableCustomizeButton &&
+      buttonsToRender.push(
+        <ButtonComponent
+          key="customizeButton"
+          style={myCustomizeButtonStyle}
+          className={customizeButtonClasses}
+          id={customizeButtonId}
+          aria-label={ariaCustomizeLabel}
+          onClick={() => {
+            this.customize();
+          }}
+          {...customCustomizeButtonProps}
+        >
+          {customizeButtonText}
         </ButtonComponent>
       );
 
