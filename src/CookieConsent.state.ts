@@ -18,6 +18,8 @@ export interface CookieConsentState {
   customizeSaveButtonStyle: React.CSSProperties;
   customizeModalStyle: React.CSSProperties;
   customizeModalTitleStyle: React.CSSProperties;
+  customizeModalOptionTitleStyle: React.CSSProperties;
+  customizeModalOptionDescStyle: React.CSSProperties;
   customizeHideOverlayButtonStyle: React.CSSProperties;
   customizeModalOptionsWrapperStyle: React.CSSProperties;
   customizeModalOptionWrapperStyle: React.CSSProperties;
@@ -140,5 +142,7 @@ export const defaultState: CookieConsentState = {
   },
   customizeModalTitleStyle: {
 
-  }
+  },
+  customizeModalOptionTitleStyle:{},
+  customizeModalOptionDescStyle:{},
 };

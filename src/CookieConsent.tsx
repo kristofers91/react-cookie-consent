@@ -246,6 +246,8 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
       customButtonWrapperAttributes,
       customizeModalTitle,
       customizeModalTitleStyle,
+      customizeModalOptionTitleStyle,
+      customizeModalOptionDescStyle,
       customizeModalStyle,
       customizeModalOptionsWrapperStyle,
       customizeModalOptionWrapperStyle,
@@ -270,6 +272,8 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
     let myCustomizeModalOptionsWrapperStyle: CSSProperties = {};
     let myCustomizeModalOptionWrapperStyle: CSSProperties = {};
     let myCustomizeModalOptionTextStyle: CSSProperties = {};
+    let myCustomizeModalOptionTitleStyle: CSSProperties = {};
+    let myCustomizeModalOptionDescStyle: CSSProperties = {};
     let myCustomizeOptionWrapperStyle: CSSProperties = {};
     let myCustomizeOptionCheckboxStyle: CSSProperties = {};
 
@@ -288,6 +292,8 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
       myCustomizeHideOverlayButtonStyle = Object.assign({}, customizeHideOverlayButtonStyle);
       myCustomizeModalStyle = Object.assign({}, customizeModalStyle);
       myCustomizeModalTitleStyle = Object.assign({}, customizeModalTitleStyle);
+      myCustomizeModalOptionTitleStyle = Object.assign({}, customizeModalOptionTitleStyle);
+      myCustomizeModalOptionDescStyle = Object.assign({}, customizeModalOptionDescStyle);
       myCustomizeModalOptionTextStyle = Object.assign({}, customizeModalOptionTextStyle);
       myCustomizeModalOptionsWrapperStyle = Object.assign({}, customizeModalOptionsWrapperStyle);
       myCustomizeModalOptionWrapperStyle = Object.assign({}, customizeModalOptionWrapperStyle);
@@ -467,8 +473,8 @@ export class CookieConsent extends Component<CookieConsentProps, CookieConsentSt
                   this.state.cookies.map((cookie) => (
                     <div style={myCustomizeModalOptionWrapperStyle}>
                       <div style={myCustomizeModalOptionTextStyle}>
-                        <h3>{cookie.title}</h3>
-                        <p>{cookie.description}</p>
+                        <h3 style={myCustomizeModalOptionTitleStyle}>{cookie.title}</h3>
+                        <p style={myCustomizeModalOptionDescStyle}>{cookie.description}</p>
                       </div>
                       <div style={myCustomizeOptionWrapperStyle}>
                         <input

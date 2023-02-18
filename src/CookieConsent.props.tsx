@@ -84,6 +84,8 @@ export interface CookieConsentProps {
   }>;
   customizeModalTitle: string;
   customizeModalTitleStyle: React.CSSProperties;
+  customizeModalOptionTitleStyle: React.CSSProperties;
+  customizeModalOptionDescStyle: React.CSSProperties;
   customizeButtonStyle: React.CSSProperties;
   customizeSaveWrapperStyle: React.CSSProperties;
   customizeSaveButtonStyle: React.CSSProperties;
@@ -171,5 +173,7 @@ export const defaultCookieConsentProps: CookieConsentProps = {
   customizeModalOptionTextStyle: {},
   customizeModalOptionsWrapperStyle: {},
   customizeModalOptionWrapperStyle: {},
-  customizeModalTitleStyle: {}
+  customizeModalTitleStyle: {},
+  customizeModalOptionTitleStyle: {},
+  customizeModalOptionDescStyle: {},
 };
