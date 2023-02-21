@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [[8.3.2]((https://github.com/Mastermindzh/react-cookie-consent/releases/tag/8.3.2)]
+
+- Customize Cookies modal: Force close icon height and width
+
 ## [[8.3.1]((https://github.com/Mastermindzh/react-cookie-consent/releases/tag/8.3.1)]
 
 - Fix missing default style for the Cookie Title, Description inside the Customize Cookies modal
